@@ -4,6 +4,7 @@ import { ReadXmlService } from '../services/read-xml-service';
 import { Product } from '../model/product';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { error } from 'node:console';
 
 @Component({
   selector: 'app-mail-content',
@@ -32,11 +33,18 @@ export class MailContent {
     this.result = null;
     this.errorMessage = null;
     console.log("Submitted content:", this.content);
-    this.xmlService.parseMailContent(this.content).subscribe(result => {
+    this.xmlService.parseMailContent(this.content).subscribe({ 
+      next: (result) => {
       this.result = result;
-    }, error => {
-      this.errorMessage = error.error || 'An error occurred while processing the XML.';
+      this.errorMessage = null;
+    }, error : (err) => {
+      console.log(err);
+      if(err && err.error && err.error.error){
+        this.errorMessage = err.error.error;
+      } else {
+        this.errorMessage = 'An error occurred while processing the XML.';
+      }
       this.result = null;
-    });
+    }});
   }
 }
