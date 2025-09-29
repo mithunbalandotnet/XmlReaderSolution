@@ -33,7 +33,7 @@ namespace XmlReader.Test.BusinessLogic
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void CalculateTax_InvalidXml_NoTags_ShouldThrow()
         {
             string xml = "plain text without tags";
@@ -41,7 +41,7 @@ namespace XmlReader.Test.BusinessLogic
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void CalculateTax_InvalidXml_BrokenClosingTag_ShouldThrow()
         {
             string xml = "<product><total>100</total>"; // no closing </product>
@@ -49,7 +49,7 @@ namespace XmlReader.Test.BusinessLogic
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void CalculateTax_MissingTotalTag_ShouldThrow()
         {
             string xml = "<product><cost_centre>XYZ</cost_centre></product>";
