@@ -1,1 +1,47 @@
-<p>mail-content works!</p>
+<p>Mail Data Import</p>
+<table>
+    <tbody>
+    <tr>
+        <td>
+            Enter the mail content below
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 8px;">
+            <textarea rows="8" cols="100" style="width: 100%;" [(ngModel)]="content"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black; padding: 8px;">
+            <button style="float: right; margin-top: 8px;" (click)="submitContent()">Submit</button>
+            <button style="float: right; margin-top: 8px; margin-right: 8px;" (click)="clearContent()">Clear</button>
+        </td>
+    </tr>
+    @if(result != null)
+    { 
+    <tr>
+        <td>
+            Sales Tax: {{result.salesTax | number:'1.2-2'}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Total without tax: {{result.totalExcludingTax | number:'1.2-2'}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Cost Centre: {{result.costCentre}}  
+        </td>
+    </tr>
+    }
+    @if(errorMessage != null)
+    {
+    <tr>
+        <td style="color: red;">
+          <strong>Error:</strong>  {{errorMessage}}
+        </td>
+    </tr>   
+    }   
+    </tbody>
+</table>
