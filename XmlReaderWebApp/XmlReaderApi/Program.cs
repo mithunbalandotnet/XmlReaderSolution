@@ -14,6 +14,14 @@ namespace XmlReaderApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddInfrastructureServices();
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularApp",
+                builder => builder.WithOrigins("http://localhost:4200") // For localhost
+                                  .AllowAnyHeader()
+                                  .AllowAnyMethod());
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -26,7 +34,8 @@ namespace XmlReaderApi
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseCors("AllowAngularApp");
+            app.UseMiddleware<CustomExceptionHandler>();
             app.MapControllers();
 
             app.Run();
